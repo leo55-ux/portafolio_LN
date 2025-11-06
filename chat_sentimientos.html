@@ -186,7 +186,7 @@
 
         <div class="content-wrapper">
             <div class="tema-titulo">
-                <h2>Tema 1: Chat_sentimientos</h2>
+                <h2>Tema 12: Chatbot sentimientos</h2>
                 <p>Creación y uso de funciones personalizadas</p>
             </div>
 
@@ -254,13 +254,20 @@ while True:
                 <h3>📚 Glosario de Funciones</h3>
 
                 <div class="glosario-item">
-                    <h4>replace</h4>
-                    <p>cambia signos de puntuacion por otros.</p>
-                    <h4>lower</h4>
-                    <p>convierte el texto en minuscalas.</p>
+                    <h4>from deep_translator import GoogleTranslator</h4>
+                    <p>Importa la libreria necesaria para tarducir textos.</p>
+                    <h4>GoogleTranslator(source='es', target='en').translate(frase)</h4>
+                    <p>traduce el texto en el lenguaje especificado.</p>
+                     <h4>TextBlob(texto)</h4>
+                    <p>Prepara la frase para ser analizada.</p>
+                    <h4>analizar.sentiment</h4>
+                    <p>Analiza el sentimiento de la frase o texto.</p>
+                     <h4>sentimientos.polarity</h4>
+                    <p>Te da un valor tipo float y dependiendo del valor significa si la frase es positiva, negativa o neutral.</p>
                 </div>
             </div>
         </div>
     </div>
 </body>
+
 </html>
