@@ -194,58 +194,49 @@
                 <h3>📝 Código del Ejemplo</h3>
                 <div class="code-container">
                     <pre>
-from textblob import TextBlob
-from deep_translator import GoogleTranslator
+                import nltk
+from nltk.tokenize import word_tokenize
 import random
-#ejmplo chatbot con listas basico
 
-#listas de saludos y respuestas
-saludos=["hola","que tal","buenos dias","buenas tardes","buen dia"]
-respuestas_saludos=["hola","como estas?",
-                    "como puedo ayudarte",
-                    "hola, como te va ","que hay?"]
+# Descargar recursos (solo primera vez)
+nltk.download('punkt')
+nltk.download('punkt_tab')
 
-despedidas=["adios","bye","gracias","nos vemos","hasta luego","goodbye"]
-respuestas_despedidas=["adios, hasta pronto",
-                       "fue un placer",
-                       "cuidate","nos vemos","bye"]
+# Base de datos del chatbot
+respuestas = {
+"hola": ["¡Hola! ¿Cómo estás?", "¡Hey! ¿Qué tal?"],
+"adiós": ["¡Hasta luego!", "¡Nos vemos!"],
+"nombre": ["Me llamo ChatBot", "Soy un bot amigable"],
+"gracias": ["¡De nada!", "Para eso estoy aquí"],
+"bien": ["¡Qué bueno!", "Me alegro por ti"]
+}
 
-valor=0
-respuestas_preguntas=["me alegro de ti😀",
-                      "yo igual estoy feliz",
-                      "no estes triste mira un pollito🐣",
-                      "siento mucho que este es triste",
-                      "te puedo ayudar si gustas"]
+def buscar_respuesta(mensaje):
+  """Busca una respuesta SIN usar for"""
+  # NLTK divide el mensaje en palabras
+  palabras = set(word_tokenize(mensaje.lower()))
 
-#mensaje de bienvenida del chatbot
-print("Chatbot: hola soy light,"
-      " tu chatbot de confianza, si deseas terminar escribe 'salir'")
+  # Buscar intersección con las claves
+  coincidencia = palabras & respuestas.keys()
+
+  # Si encuentra algo, devolver respuesta random
+  if coincidencia:
+    palabra_encontrada = coincidencia.pop()
+    return random.choice(respuestas[palabra_encontrada])
+
+  return "No entiendo, ¿puedes decirlo de otra forma?"
+
+# === CHATBOT ===
+print("Chatbot: ¡Hola! Escribe 'salir' para terminar\n")
 
 while True:
-    usuario=input("Tu:").lower().strip()
+  mensaje = input("Tú: ")
 
-    if usuario in saludos:
-        print("Chatbot:",random.choice(respuestas_saludos))
-
-    elif usuario in despedidas:
-        print("Chtbot:",random.choice(respuestas_despedidas))
-
-    elif not( usuario in saludos and usuario in despedidas):
-        traducido = GoogleTranslator(source='es', target='en').translate(usuario)
-        analizar = TextBlob(traducido)
-        sentimientos = analizar.sentiment
-        valor = sentimientos.polarity
-        if valor > 0:
-            print("Chatbot:", random.choice(respuestas_preguntas[:2]))
-
-        elif valor < -0.3:
-            print( "Chatbot:",random.choice(respuestas_preguntas[2:]))
-
-    elif usuario=="salir":
-        print("Chatbot: por que me terminas 😭, hasta pronto👋")
-        break
-    else:
-        print("Chatbot: escibe bien, por cosas como estas te dejan")                  
+  if mensaje.lower() == "salir":
+    print("Chatbot: ¡Adiós!")
+    break
+  respuesta = buscar_respuesta(mensaje)
+  print("Chatbot:", respuesta, "\n")
                     </pre>
                 </div>
             </div>
@@ -254,16 +245,15 @@ while True:
                 <h3>📚 Glosario de Funciones</h3>
 
                 <div class="glosario-item">
-                    <h4>from deep_translator import GoogleTranslator</h4>
-                    <p>Importa la libreria necesaria para tarducir textos.</p>
-                    <h4>GoogleTranslator(source='es', target='en').translate(frase)</h4>
-                    <p>traduce el texto en el lenguaje especificado.</p>
-                     <h4>TextBlob(texto)</h4>
-                    <p>Prepara la frase para ser analizada.</p>
-                    <h4>analizar.sentiment</h4>
-                    <p>Analiza el sentimiento de la frase o texto.</p>
-                     <h4>sentimientos.polarity</h4>
-                    <p>Te da un valor tipo float y dependiendo del valor significa si la frase es positiva, negativa o neutral.</p>
+                    <h4>from nltk.tokenize import word_tokenize</h4>
+                    <p>Importa la libreria necesaria para tokenizar textos.</p>
+                    <h4>nltk.download('punkt')</h4>
+                    <p> Descargar recursos (solo primera vez)</p>
+                     <h4>palabras = set(word_tokenize(mensaje.lower()))</h4>
+                    <p> NLTK divide el mensaje en palabras</p>
+                    <h4>palabra_encontrada = coincidencia.pop()
+    return random.choice(respuestas[palabra_encontrada])</h4>
+                    <p>Si encuentra algo, devolver respuesta random</p>
                 </div>
             </div>
         </div>
